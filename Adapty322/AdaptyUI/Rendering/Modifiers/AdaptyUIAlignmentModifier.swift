@@ -30,6 +30,7 @@ extension VC.HorizontalAlignment {
             case .rightToLeft: TextAlignment.leading
             @unknown default: TextAlignment.trailing
             }
+        @unknown default: TextAlignment.trailing
         }
     }
 }

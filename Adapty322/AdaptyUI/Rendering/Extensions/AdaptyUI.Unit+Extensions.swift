@@ -19,7 +19,9 @@ package extension VC.Unit {
             switch value {
             case .start: safeAreaStart
             case .end: safeAreaEnd
+            @unknown default: safeAreaStart
             }
+            @unknown default: 0
         }
     }
 }

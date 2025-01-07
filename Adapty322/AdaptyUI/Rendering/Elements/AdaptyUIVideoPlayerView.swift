@@ -18,6 +18,7 @@ extension VC.AspectRatio {
         case .fit: .resizeAspect
         case .fill: .resizeAspectFill
         case .stretch: .resize
+        @unknown default: .resize
         }
     }
 }
@@ -138,7 +139,7 @@ struct AdaptyUIVideoColorSchemeSpecificView: View {
     private let video: VC.VideoData
     private let aspect: VC.AspectRatio
     private let loop: Bool
-    private let placeholder: VC.ImageData
+    private let placeholder: VC.ImageData?
 
     init(
         video: VC.VideoData,
@@ -149,9 +150,11 @@ struct AdaptyUIVideoColorSchemeSpecificView: View {
         self.aspect = aspect
         self.loop = loop
 
-        switch video {
+         switch video {
         case let .url(_, image), let .resources(_, image):
             self.placeholder = image
+             @unknown default:
+             self.placeholder = nil
         }
     }
 
@@ -169,7 +172,7 @@ struct AdaptyUIVideoColorSchemeSpecificView: View {
 
             if showPlaceholder {
                 AdaptyUIImageView(
-                    asset: placeholder,
+                    asset: placeholder!,
                     aspect: aspect,
                     tint: nil
                 )

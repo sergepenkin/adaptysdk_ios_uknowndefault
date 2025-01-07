@@ -39,6 +39,8 @@ enum TaskDuration: Comparable, Sendable {
             Double(minutes * 60)
         case let .hours(hours):
             Double(hours * 60 * 60)
+        @unknown default:
+            0
         }
     }
 
@@ -59,6 +61,8 @@ enum TaskDuration: Comparable, Sendable {
             minutes * 60 * 1_000
         case let .hours(hours):
             hours * 60 * 60 * 1_000
+        @unknown default:
+        0
         }
     }
     
@@ -79,6 +83,8 @@ enum TaskDuration: Comparable, Sendable {
             minutes * 60 * 1_000_000_000
         case let .hours(hours):
             hours * 60 * 60 * 1_000_000_000
+        @unknown default:
+        0
         }
     }
 

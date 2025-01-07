@@ -45,6 +45,11 @@ struct AdaptyUIButtonView: View {
             } else {
                 return button.normalState
             }
+        @unknown default:
+
+                return button.normalState
+            
+
         }
     }
 
@@ -135,6 +140,8 @@ extension VC.ActionAction {
             default:
                 actionsViewModel.customActionOccurred(id: id)
             }
+        @unknown default:
+            actionsViewModel.closeActionOccurred()
         }
     }
 }

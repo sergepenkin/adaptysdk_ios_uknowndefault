@@ -18,6 +18,7 @@ extension VC.VerticalAlignment {
         case .center: .center
         case .bottom: .bottom
         case .justified: .center
+        @unknown default: .center
         }
     }
 }
@@ -28,6 +29,8 @@ extension VC.Pager.Length {
         switch self {
         case let .fixed(unit): unit.points(screenSize: screenSize, safeAreaStart: safeAreaStart, safeAreaEnd: safeAreaEnd)
         case let .parent(value): parent * value
+        @unknown default:  parent * 0
+
         }
     }
 }
@@ -40,6 +43,7 @@ extension VC.TransitionSlide {
         case .easeIn: .easeIn(duration: duration)
         case .easeOut: .easeOut(duration: duration)
         case .linear: .linear(duration: duration)
+        @unknown default: .easeInOut(duration: duration)
         }
     }
 }
@@ -109,6 +113,13 @@ struct AdaptyUIPagerView: View {
                             .padding(pageControl.padding)
                     }
                 }
+            @unknown default:
+                ZStack(alignment: pageControl.verticalAlignment.swiftUIAlignment) {
+                    pagerView
+                    pageControlView(pageControl, onDotTap: onPageDotTap)
+                        .padding(pageControl.padding)
+                }
+
             }
         } else {
             pagerView
@@ -139,6 +150,9 @@ struct AdaptyUIPagerView: View {
             stopAutoScroll()
         case .pauseAnimation:
             shouldScheduleAutoscroll = true
+            stopAutoScroll()
+        @unknown default:
+            shouldScheduleAutoscroll = false
             stopAutoScroll()
         }
 

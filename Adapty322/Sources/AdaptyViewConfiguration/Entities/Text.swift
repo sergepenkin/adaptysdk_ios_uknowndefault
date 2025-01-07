@@ -25,7 +25,7 @@ extension AdaptyViewConfiguration {
         package enum Value: Sendable {
             case text(RichText)
             case productText(LazyLocalisedProductText)
-            case selectedProductText(LazyLocalisedUnknownProductText)
+            case selectedProductText(LazyLocalisedUnknownProductText)                
         }
     }
 }

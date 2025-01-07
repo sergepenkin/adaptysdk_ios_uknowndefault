@@ -36,6 +36,9 @@ extension VC.Element {
              let .pager(_, properties), let .unknown(_, properties),
              let .video(_, properties):
             return properties
+        @unknown default:
+            return nil
+
         }
     }
 }
@@ -89,6 +92,8 @@ struct AdaptyUIElementWithoutPropertiesView: View {
             AdaptyUIPagerView(pager)
         case let .unknown(value, _):
             AdaptyUIUnknownElementView(value: value)
+        @unknown default:
+            AdaptyUIUnknownElementView(value: "")
         }
     }
 

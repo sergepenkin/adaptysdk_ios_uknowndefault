@@ -27,6 +27,8 @@ extension View {
             }
         case .stretch:
             self
+        @unknown default:
+            aspectRatio(contentMode: .fit)
         }
     }
 }
@@ -106,6 +108,9 @@ struct AdaptyUIImageView: View {
                         EmptyView()
                     }
                 }
+        @unknown default:
+            rasterImage(UIImage(named: ""), aspect: aspect, tint: tint)
+
         }
     }
 

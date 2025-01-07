@@ -42,6 +42,8 @@ struct AdaptyUIColumnView: View {
                 )
             case let .weight(value):
                 totalWeight += value
+            @unknown default:
+                totalWeight += 0
             }
         }
 
@@ -72,7 +74,8 @@ struct AdaptyUIColumnView: View {
                         ))
                     case let .weight(weight):
                         size = .fixed((Double(weight) / Double(totalWeight)) * weightsAvailableLength)
-                    }
+                    @unknown default:
+                        size = .fixed((Double(0) / Double(totalWeight)) * weightsAvailableLength)                    }
 
                     return GridItem(
                         size,

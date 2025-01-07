@@ -67,8 +67,14 @@ extension InsettableShape {
                                 endRadius: 1.0
                             )
                         )
+                    @unknown default:
+                        self.fill()
                     }
-                }
+                @unknown default:
+                    self.fill(style: FillStyle.init( ))
+                                    }
+            @unknown default:
+                self
             }
         } else {
             self
@@ -111,7 +117,19 @@ extension InsettableShape {
                         ),
                         lineWidth: lineWidth
                     )
+                @unknown default:
+                    self.strokeBorder(
+                        RadialGradient(
+                            gradient: .init(stops: gradient.items.map { $0.gradientStop }),
+                            center: .center,
+                            startRadius: 0.0,
+                            endRadius: 1.0
+                        ),
+                        lineWidth: lineWidth
+                    )
                 }
+                @unknown default:
+                self.strokeBorder()
             }
         } else {
             self
@@ -136,6 +154,9 @@ extension View {
             self.clipShape(CurveUpShape())
         case .curveDown:
             self.clipShape(CurveDownShape())
+        @unknown default:
+            self.clipShape(Circle())
+
         }
     }
 }
@@ -162,6 +183,10 @@ extension VC.ShapeType {
         case .curveDown:
             CurveDownShape()
                 .fill(background: background, colorScheme: colorScheme)
+        @unknown default:
+            Circle()
+                .fill(background: background, colorScheme: colorScheme)
+
         }
     }
 
@@ -186,6 +211,10 @@ extension VC.ShapeType {
         case .curveDown:
             CurveDownShape()
                 .stroke(filling: filling, lineWidth: lineWidth * 2.0)
+        @unknown default:
+            Circle()
+                .stroke(filling: filling, lineWidth: lineWidth)
+
         }
     }
 }

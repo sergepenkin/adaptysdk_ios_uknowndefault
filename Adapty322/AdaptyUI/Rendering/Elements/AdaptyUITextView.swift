@@ -25,11 +25,12 @@ struct AdaptyUITextView: View {
     }
 
     var body: some View {
-        let (richText, productInfo) = text.extract(productsInfoProvider: productsViewModel)
 
+        let (richText, productInfo) = text.extract(productsInfoProvider: productsViewModel)
+        
         switch productInfo {
         case .notApplicable:
-            richText
+            richText?
                 .convertToSwiftUIText(
                     tagResolver: customTagResolverViewModel,
                     productInfo: nil,
@@ -39,7 +40,7 @@ struct AdaptyUITextView: View {
                 .lineLimit(text.maxRows)
                 .minimumScaleFactor(text.overflowMode.contains(.scale) ? 0.01 : 1.0)
         case .notFound:
-            richText
+            richText?
                 .convertToSwiftUIText(
                     tagResolver: customTagResolverViewModel,
                     productInfo: nil,
@@ -50,7 +51,7 @@ struct AdaptyUITextView: View {
                 .minimumScaleFactor(text.overflowMode.contains(.scale) ? 0.01 : 1.0)
                 .redactedAsPlaceholder(true)
         case let .found(productInfoModel):
-            richText
+            richText?
                 .convertToSwiftUIText(
                     tagResolver: customTagResolverViewModel,
                     productInfo: productInfoModel,
@@ -60,6 +61,7 @@ struct AdaptyUITextView: View {
                 .lineLimit(text.maxRows)
                 .minimumScaleFactor(text.overflowMode.contains(.scale) ? 0.01 : 1.0)
         }
+       
     }
 }
 
@@ -125,6 +127,8 @@ extension Array where Element == AdaptyViewConfiguration.RichText.Item {
                         uiImage: uiImage
                     )
                 )
+            @unknown default:
+                throw AdaptyUI.RichTextError.tagReplacementNotFound
             }
         }
     }
@@ -212,7 +216,8 @@ extension VC.Text {
         case found(ProductInfoModel)
     }
 
-    func extract(productsInfoProvider: ProductsInfoProvider) -> (VC.RichText, ProductInfoContainer) {
+    func extract(productsInfoProvider: ProductsInfoProvider) -> (VC.RichText?, ProductInfoContainer) {
+        
         switch value {
         case let .text(value):
             return (value, .notApplicable)
@@ -220,7 +225,7 @@ extension VC.Text {
             guard let underlying = productsInfoProvider.productInfo(by: value.adaptyProductId) else {
                 return (value.richText(byPaymentMode: .unknown), .notFound)
             }
-
+            
             return (value.richText(byPaymentMode: underlying.paymentMode), .found(underlying))
         case let .selectedProductText(value):
             guard let underlying = productsInfoProvider.selectedProductInfo(by: value.productGroupId),
@@ -228,8 +233,10 @@ extension VC.Text {
             else {
                 return (value.richText(), .notFound)
             }
-
+            
             return (value.richText(adaptyProductId: adaptyProductId, byPaymentMode: underlying.paymentMode), .found(underlying))
+        @unknown default:
+            return (nil, .notFound)
         }
     }
 }

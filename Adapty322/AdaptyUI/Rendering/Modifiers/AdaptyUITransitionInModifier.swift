@@ -18,6 +18,7 @@ extension VC.Transition.Interpolator {
         case .easeIn: .easeIn(duration: duration)
         case .easeOut: .easeOut(duration: duration)
         case .linear: .linear(duration: duration)
+        @unknown default: .easeInOut(duration: duration)
         }
     }
 }
@@ -32,6 +33,8 @@ extension VC.Transition {
                 .delay(params.startDelay)
         case .unknown:
             nil
+        @unknown default:
+             nil
         }
     }
 }

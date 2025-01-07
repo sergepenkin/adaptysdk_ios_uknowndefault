@@ -48,7 +48,12 @@ struct AdaptyUIStackView: View {
                     AdaptyUIElementView(stack.content[$0])
                 }
             }
-        }
+        @unknown default:
+            HStack(alignment: stack.verticalAlignment.swiftuiValue, spacing: stack.spacing) {
+                ForEach(0 ..< stack.content.count, id: \.self) {
+                    AdaptyUIElementView(stack.content[$0])
+                }
+            }        }
     }
 }
 

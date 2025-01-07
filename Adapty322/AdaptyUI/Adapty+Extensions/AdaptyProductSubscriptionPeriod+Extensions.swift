@@ -16,6 +16,7 @@ extension AdaptySubscriptionPeriod {
         case .month: return Double(numberOfUnits) * 30.0
         case .year: return Double(numberOfUnits) * 365.0
         case .unknown: return 0.0
+        @unknown default: return 0.0
         }
     }
 
@@ -26,6 +27,7 @@ extension AdaptySubscriptionPeriod {
         case .month: return Double(numberOfUnits) * 4.0
         case .year: return Double(numberOfUnits) * 52.0
         case .unknown: return 0.0
+        @unknown default: return 0.0
         }
     }
 
@@ -36,6 +38,7 @@ extension AdaptySubscriptionPeriod {
         case .month: return Double(numberOfUnits)
         case .year: return Double(numberOfUnits) * 12.0
         case .unknown: return 0.0
+        @unknown default: return 0.0
         }
     }
 
@@ -46,6 +49,7 @@ extension AdaptySubscriptionPeriod {
         case .month: return Double(numberOfUnits) / 12.0
         case .year: return Double(numberOfUnits)
         case .unknown: return 0.0
+        @unknown default: return 0.0
         }
     }
 
@@ -56,6 +60,7 @@ extension AdaptySubscriptionPeriod {
         case .month: return numberOfMonths()
         case .year: return numberOfYears()
         case .unknown: return 0.0
+        @unknown default: return 0.0
         }
     }
 }

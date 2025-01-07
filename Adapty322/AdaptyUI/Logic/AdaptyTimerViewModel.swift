@@ -94,8 +94,14 @@ package final class AdaptyTimerViewModel: ObservableObject {
             case .custom:
                 timers[timer.id] = timerResolver.timerEndAtDate(for: timer.id)
                 return at
+            @unknown default:
+                let endAt = Date(timeIntervalSince1970: at.timeIntervalSince1970 + duration)
+                timers[timer.id] = endAt
+                return endAt
             }
-        }
+        @unknown default:
+            timers[timer.id] = timerResolver.timerEndAtDate(for: timer.id)
+            return at        }
     }
 
     func timeLeft(

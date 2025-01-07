@@ -26,7 +26,8 @@ extension Alignment {
         case (.bottom, .leading): .bottomLeading
         case (.bottom, .center): .bottom
         case (.bottom, .trailing): .bottomTrailing
-        default: .center
+                default: .center
+        
         }
     }
 }
@@ -51,6 +52,7 @@ extension VC.HorizontalAlignment {
             case .rightToLeft: SwiftUI.HorizontalAlignment.leading
             @unknown default: SwiftUI.HorizontalAlignment.trailing
             }
+        @unknown default:  SwiftUI.HorizontalAlignment.center
         }
     }
 }
@@ -63,6 +65,7 @@ extension VC.VerticalAlignment {
         case .center: .center
         case .bottom: .bottom
         case .justified: .center
+        @unknown default: .center
         }
     }
 }
